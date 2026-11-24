@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        int n=temperatures.size();
+        vector<int> ans(n,0);
+        stack<int> temp;
+        temp.push(-1);   //to have an endpoint
+        for(int i=n-1;i>=0;i--){
+            while(temp.top()!=-1){     //jab tak endpoint nahi aata tab tak chalte jao
+                if(temperatures[temp.top()]>temperatures[i]){    //jaise hi higher temp mile break kr do taki woh temp index stack mein rahe for further cases(na ki pop ho jaye)
+                    ans[i]= temp.top()-i;
+                    break;
+                }
+                temp.pop();   //joh temp lower hai unke index ko hata do cz they will never be needed again
+            }
+            temp.push(i);  //current index ko push karo
+        }
+        return ans;
+    }
+};
+
+// if temp[i]<temp[i-1] toh definitely agar closest bigger number dhund rhe hai toh temp[i] wont be needed!!
